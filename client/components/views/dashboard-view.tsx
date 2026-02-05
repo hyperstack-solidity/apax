@@ -7,7 +7,7 @@ import { ShariaCertificationHub } from '@/components/sharia-certification-hub'
 
 export function DashboardView() {
   return (
-    <div className="space-y-4 md:space-y-6 stagger-in max-w-7xl mx-auto overflow-hidden">
+    <div className="space-y-4 md:space-y-6  max-w-7xl mx-auto overflow-hidden">
       {/* Live Ledger Ticker */}
       <div className="w-full bg-[#1A1A1A]/50 border-y border-[#2A2A2A] overflow-hidden py-1.5 relative">
         <div className="flex animate-ticker whitespace-nowrap gap-12 items-center">

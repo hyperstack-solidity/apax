@@ -35,11 +35,11 @@ export function PorView() {
   }
 
   return (
-    <div className="space-y-6 stagger-in">
+    <div className="space-y-6 ">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-serif font-bold text-[#E8E8E8] stagger-in">
+          <h1 className="text-2xl font-serif font-bold text-[#E8E8E8] ">
             Proof of Reserve Monitor
           </h1>
           <p className="text-sm text-[#888888] mt-1">
