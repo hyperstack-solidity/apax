@@ -17,22 +17,20 @@ const BullionCard: React.FC<BullionCardProps> = ({
   className 
 }) => {
   
-  // REFINED METAL GRADIENTS
+  // REFINED METAL STYLES USING RADIAL GRADIENT
   const metalStyles = {
     gold: {
-      // 1. YOUR CUSTOM RADIAL GRADIENT
+      // Custom Modal Gradient
       face: "radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%)",
       border: "border-[#b38728]",
       text: "text-[#5e430c]",
       shadow: "shadow-[#5E430C]/50",
       glow: "from-[#FFED8A]/50",
-      // Engraving Physics: Light on Bottom-Right (White), Dark on Top-Left (Black)
+  
       engrave: "1px 1px 0px rgba(255,255,255,0.5), -1px -1px 1px rgba(0,0,0,0.4)"
     },
     silver: {
-      // Cool Silver Radial Gradient
-      // Bottom-Right: Bright White/Light Gray -> Medium Gray
-      // Top-Left: Pure White Highlight -> Deep Steel Gray
+
       face: "radial-gradient(ellipse farthest-corner at right bottom, #FFFFFF 0%, #F0F0F0 8%, #A8A8A8 30%, #808080 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #E6E6E6 8%, #B0B0B0 25%, #666666 62.5%, #444444 100%)",
       border: "border-[#a0a0a0]",
       text: "text-[#333333]",
@@ -41,9 +39,7 @@ const BullionCard: React.FC<BullionCardProps> = ({
       engrave: "1px 1px 0px rgba(255,255,255,0.8), -1px -1px 1px rgba(0,0,0,0.2)"
     },
     platinum: {
-      // Blue-Tinted Platinum Radial Gradient
-      // Bottom-Right: Icy White -> Blue-Gray
-      // Top-Left: Bright Blue-White -> Dark Slate Blue
+    
       face: "radial-gradient(ellipse farthest-corner at right bottom, #EEF2F5 0%, #E6EDF5 8%, #8593A8 30%, #6B7687 40%, transparent 80%), radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #F0F4F8 8%, #98A6BA 25%, #475569 62.5%, #2D3642 100%)",
       border: "border-[#6b7687]",
       text: "text-[#1a2330]",
@@ -60,12 +56,9 @@ const BullionCard: React.FC<BullionCardProps> = ({
       {/* Animation Style Block */}
       <style jsx global>{`
        @keyframes pure-shimmer-loop {
-         
           0% { transform: translateX(-150%) skewX(-45deg); }
-        
           100% { transform: translateX(300%) skewX(-45deg); }
         }
-        
         .group:hover .shimmer-effect {
   /* A 1.5s loop where the shimmer takes 0.75s to cross, and waits 0.75s */
   animation: pure-shimmer-loop 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
