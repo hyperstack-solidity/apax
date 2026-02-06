@@ -8,7 +8,7 @@ import BullionCard from '@/components/ui/bullion-card'
 
 export function DashboardView() {
   const showroomItems = [
-    { type: "gold" as const, weight: "1 kg", purity: "999.9", price: "$74,250.00" },
+   
     { type: "silver" as const, weight: "100 oz", purity: "999.0", price: "$2,450.00" },
     { type: "platinum" as const, weight: "500 g", purity: "999.5", price: "$14,800.00" },
     { type: "gold" as const, weight: "100 g", purity: "999.9", price: "$7,450.00" },
