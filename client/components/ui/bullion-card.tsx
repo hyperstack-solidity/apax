@@ -59,13 +59,17 @@ const BullionCard: React.FC<BullionCardProps> = ({
     <>
       {/* Animation Style Block */}
       <style jsx global>{`
-        @keyframes shimmer-loop {
-          0% { transform: translateX(-150%) skewX(-25deg); }
-          100% { transform: translateX(150%) skewX(-25deg); }
+       @keyframes pure-shimmer-loop {
+         
+          0% { transform: translateX(-150%) skewX(-45deg); }
+        
+          100% { transform: translateX(300%) skewX(-45deg); }
         }
+        
         .group:hover .shimmer-effect {
-          animation: shimmer-loop 2s infinite linear;
-        }
+  /* A 1.5s loop where the shimmer takes 0.75s to cross, and waits 0.75s */
+  animation: pure-shimmer-loop 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
       `}</style>
 
       <div
@@ -99,13 +103,13 @@ const BullionCard: React.FC<BullionCardProps> = ({
           
           {/* Layer C: Moving Sheen (Holographic Loop) */}
           <div 
-            className={cn(
-              "shimmer-effect absolute inset-0 z-20 -translate-x-[150%] skew-x-[-25deg]",
-              "mix-blend-overlay bg-gradient-to-r via-white/30 to-transparent",
-              theme.glow
-            )}
-          />
-
+  className={cn(
+    "shimmer-effect absolute inset-0 z-20 -translate-x-[140%] skew-x-[-45deg]",
+   
+    "bg-gradient-to-r from-transparent via-white/10 via-30% via-white/70 via-50% to-transparent",
+    "mix-blend-overlay"
+  )}
+/>
           {/* Layer D: Sharp Edge Highlights */}
           <div className="absolute inset-0 z-20 border-t border-l border-white/50 rounded-xl mix-blend-overlay pointer-events-none" />
 
