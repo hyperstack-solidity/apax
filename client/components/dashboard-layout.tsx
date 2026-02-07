@@ -8,14 +8,19 @@ import { Bell, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAPAXStore } from '@/lib/store'
+import { AnimatePresence } from "framer-motion"
+import { MotionWrapper } from "@/components/shared/MotionWrapper"
+import { usePathname } from "next/navigation"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
-export function DashboardLayout({ children }: DashboardLayoutProps) {
-  const { metalPrices } = useAPAXStore()
-
+export function DashboardLayout({ children}: DashboardLayoutProps) {
+  const { metalPrices, activeView } = useAPAXStore()
+  const pathname = usePathname()
+  //animation key now reacts to store changes automatically
+  const animationKey = activeView ? `view-${activeView}` : pathname
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -75,9 +80,13 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         </header>
 
         {/* Main Content Area */}
-        <div className="flex-1 p-4 md:p-6 min-w-0">
-          {children}
-        </div>
+        <main className="flex-1 p-4 md:p-6 min-w-0">
+          <AnimatePresence mode="wait" initial={true}>
+            <MotionWrapper  key={animationKey} stagger={true} className="w-full max-w-7xl mx-auto">
+              {children}
+            </MotionWrapper>
+          </AnimatePresence>
+        </main>
       </SidebarInset>
     </SidebarProvider>
   )

@@ -155,7 +155,7 @@ export function AppSidebar() {
               <p className="text-sm font-medium text-[#E8E8E8] truncate">John Doe</p>
               <p className="text-xs text-[#888888] truncate">client@apax.institutional</p>
             </div>
-            <button className="p-1.5 rounded-md hover:bg-[#1A1A1A] text-[#888888] hover:text-[#E8E8E8] transition-colors">
+            <button className="p-1.5 rounded-md hover:bg-[#1A1A1A] text-[#888888] hover:text-[#E8E8E8] transition-colors" title='sign-out'>
               <SignOut className="h-4 w-4" />
             </button>
           </div>
