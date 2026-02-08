@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useEffect, useState, memo } from 'react'
+import React, { useEffect, useState, useRef, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AuditLog } from '@/lib/store'
 
-
-/* scanning effect */
+// scanning effect
 const ScanningBeam = () => (
   <div className="w-full h-37.5 relative">
     <div className="absolute inset-x-0 bottom-0 h-full bg-linear-to-t from-[#D4AF37]/20 via-[#D4AF37]/5 to-transparent" />
@@ -30,7 +29,7 @@ const AuditLogCard = memo(({
   totalLogs: number;
   beamDuration: number;
 }) => {
-  // reveal sync
+  //reveal sync
   const revealDelay = (index / totalLogs) * beamDuration;
 
   return (
@@ -80,25 +79,31 @@ AuditLogCard.displayName = 'AuditLogCard'
 export function LiveSecurityTerminal({ logs }: { logs: AuditLog[] }) {
   const [isBeamVisible, setIsBeamVisible] = useState(false)
   const [beamKey, setBeamKey] = useState(0)
-  
   const displayLogs = logs.slice(-20);
   const BEAM_DURATION = 4 // beam speed
 
   useEffect(() => {
-    if (displayLogs.length > 0) {
-      setIsBeamVisible(true)
-      setBeamKey(prev => prev + 1)
+    if (logs.length > 0) {
+      setIsBeamVisible(false);
+      
+      const timer = setTimeout(() => {
+        setIsBeamVisible(true);
+        setBeamKey(prev => prev + 1);
+      }, 50); // small buffer to stabilize the engine
+
+      return () => clearTimeout(timer);
     }
-  }, [logs.length]) 
+  }, [logs.length]); // watch the count for new log renders
 
   return (
     <div className="relative w-full h-auto overflow-hidden bg-transparent min-h-100">
-      <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="wait"> 
         {isBeamVisible && (
           <motion.div
             key={`beam-wrapper-${beamKey}`}
             initial={{ y: "-10%" }}
             animate={{ y: "110%" }}
+            exit={{ opacity: 0 }} 
             transition={{ duration: BEAM_DURATION, ease: "linear" }}
             onAnimationComplete={() => setIsBeamVisible(false)}
             className="absolute inset-x-0 z-30 pointer-events-none"
@@ -111,8 +116,8 @@ export function LiveSecurityTerminal({ logs }: { logs: AuditLog[] }) {
         )}
       </AnimatePresence>
       
-      <div className="space-y-3 relative z-10 pb-10 flex flex-col-reverse">
-        {/* reversed column layout */}
+      <div className="space-y-3 relative z-10 pb-10">
+        {/* reverse column layout */}
         <div className="flex flex-col gap-3">
           {displayLogs.map((log, i) => (
             <AuditLogCard 
