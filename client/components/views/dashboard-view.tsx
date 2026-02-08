@@ -4,8 +4,16 @@ import Image from 'next/image'
 import { PortfolioOverview } from '@/components/portfolio-overview'
 import { AssetAllocationChart } from '@/components/asset-allocation-chart'
 import { ShariaCertificationHub } from '@/components/sharia-certification-hub'
+import BullionCard from '@/components/ui/bullion-card'
 
 export function DashboardView() {
+  const showroomItems = [
+    { type: "gold" as const, weight: "100 g", purity: "999.9", price: "$7,450.00" },
+    { type: "silver" as const, weight: "100 oz", purity: "999.0", price: "$2,450.00" },
+    { type: "platinum" as const, weight: "500 g", purity: "999.5", price: "$14,800.00" },
+    { type: "gold" as const, weight: "100 g", purity: "999.9", price: "$7,450.00" },
+  ];
+
   return (
     <div className="space-y-4 md:space-y-6  max-w-7xl mx-auto overflow-hidden">
       {/* Live Ledger Ticker */}
@@ -54,6 +62,31 @@ export function DashboardView() {
         {/* Sharia Certification Hub - Moved inside grid for better density */}
         <ShariaCertificationHub />
       </div>
+     <div className="pt-8 space-y-6">
+        <div className="flex items-center justify-between px-4 sm:px-0">
+           <h2 className="text-xl md:text-2xl font-serif font-bold text-[#E8E8E8]">
+             Bullion Showroom
+           </h2>
+           <button className="text-xs text-[#D4AF37] hover:underline uppercase tracking-widest font-bold transition-colors hover:text-[#FCE798]">
+             View Vault Inventory →
+           </button>
+        </div>
+  
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0">
+          {showroomItems.map((item, idx) => (
+            <BullionCard 
+              key={idx}
+              type={item.type}
+              weight={item.weight}
+              purity={item.purity}
+              price={item.price}
+              className="w-full" // Ensure card takes full width of grid cell
+            />
+          ))}
+        </div>
+      </div>
+      
+
     </div>
   )
 }
