@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { PortfolioOverview } from '@/components/portfolio-overview'
 import { AssetAllocationChart } from '@/components/asset-allocation-chart'
 import { ShariaCertificationHub } from '@/components/sharia-certification-hub'
-import { VerificationProgress } from '../shared/verification-progress'
 
 export function DashboardView() {
   return (
@@ -44,8 +43,6 @@ export function DashboardView() {
           </div>
         </div>
       </div>
-
-      <VerificationProgress/>
 
       {/* Portfolio Overview Stats */}
       <PortfolioOverview />
