@@ -15,6 +15,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { ScanningBeam } from "@/components/shared/scanning-beam";
 
 // type definitions so that ui can't enter an undefined state
 export type VerificationStatus =
@@ -41,7 +42,7 @@ const STAGES = [
 export function VerificationProgress({
   status: externalStatus = "idle", //the control
   onComplete,
-  isSimulated = false, //set to false for control otherwise true if automated rendering
+  isSimulated = true, //set to false for control otherwise true if automated rendering
 }: VerificationProgressProps) {
     
   const [mounted, setMounted] = useState(false);
@@ -113,7 +114,7 @@ export function VerificationProgress({
 
   return (
     <div className="space-y-6">
-      <Card className="w-full max-w-md mx-auto bg-background border-border institutional-shadow overflow-hidden">
+      <Card className="w-full max-w-md mx-auto bg-background border-border institutional-shadow overflow-hidden shadow-none">
         <CardContent className="p-6">
           <AnimatePresence mode="wait">
             {/* Active processing state - shown during scanning, liveness, and analysis stages */}
@@ -163,14 +164,14 @@ export function VerificationProgress({
                       return (
                         <div
                           key={stage.id}
-                          className="flex flex-col items-center gap-2"
+                          className="flex flex-col items-center gap-2 pointer-events-none"
                         >
                           <div
                             className={`
-                            relative w-12 h-12 rounded-xl border flex items-center justify-center transition-all duration-500
+                            relative w-12 h-12 rounded-lg border flex items-center justify-center
                             ${
                               isActive
-                                ? "border-primary bg-primary/10 shadow-[0_0_20px_rgba(212,175,55,0.1)]"
+                                ? "border-primary bg-primary/10"
                                 : isPassed
                                 ? "border-[#22C55E]/40 bg-[#22C55E]/5"
                                 : "border-border bg-transparent"
@@ -200,18 +201,10 @@ export function VerificationProgress({
                   </div>
                 </div>
 
-                {/* scanner animation */}
-                <div className="relative h-16 bg-sidebar rounded-lg border border-border overflow-hidden">
-                  <motion.div
-                    animate={{ top: ["-100%", "100%"] }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 1.2,
-                      ease: "linear",
-                    }}
-                    className="absolute inset-x-0 h-full bg-linear-to-b from-transparent via-primary/15 to-transparent z-10 pointer-events-none"
-                  />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center font-mono text-[9px] text-muted-foreground space-y-1.5 text-center">
+                {/* scanner animation container */}
+                <div className="relative h-16 bg-[#0A0A0A] rounded-lg border border-border overflow-hidden">
+                  <ScanningBeam duration={1.2} />
+                  <div className="absolute inset-0 flex flex-col items-center justify-center font-mono text-[9px] text-muted-foreground space-y-1.5 text-center z-40 bg-background/5 backdrop-blur-[0.5px]">
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-3 h-3 animate-spin text-primary" />
                       <span className="tracking-widest">
@@ -236,41 +229,15 @@ export function VerificationProgress({
                   ease: [0.16, 1, 0.3, 1],
                   scale: { type: "spring", damping: 15, stiffness: 100 } 
                 }}
-                className="py-10 flex flex-col items-center text-center space-y-6"
+                className="py-10 flex flex-col items-center text-center space-y-6 pointer-events-none"
               >
                 <div className="relative">
-                  {/* Pulsating bloom effect */}
-                  <motion.div 
-                    animate={{ 
-                      scale: [1, 1.2, 1],
-                      opacity: [0.15, 0.3, 0.15]
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity, 
-                      ease: "easeInOut" 
-                    }}
-                    className="absolute inset-0 bg-[#22C55E] rounded-full blur-[50px]" 
-                  />
-                  
-                  {/* Glowing Shield Container with pulse */}
-                  <motion.div 
-                    animate={{ 
-                      boxShadow: [
-                        "0 0 40px rgba(34,197,94,0.2), inset 0 0 20px rgba(34,197,94,0.1)",
-                        "0 0 60px rgba(34,197,94,0.4), inset 0 0 30px rgba(34,197,94,0.2)",
-                        "0 0 40px rgba(34,197,94,0.2), inset 0 0 20px rgba(34,197,94,0.1)"
-                      ]
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity, 
-                      ease: "easeInOut" 
-                    }}
-                    className="relative w-24 h-24 rounded-full border-2 border-[#22C55E]/50 flex items-center justify-center bg-[#22C55E]/10"
+                  {/* Removed all motion wrappers and drop-shadows that cause glowing on hover */}
+                  <div 
+                    className="relative w-24 h-24 rounded-full border border-[#22C55E]/30 flex items-center justify-center bg-[#22C55E]/5"
                   >
-                    <ShieldCheck className="w-12 h-12 text-[#22C55E] bg-none! filter-none! drop-shadow-[0_0_12px_rgba(34,197,94,0.7)]" />
-                  </motion.div>
+                    <ShieldCheck className="w-12 h-12 text-[#22C55E]" />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
@@ -298,7 +265,7 @@ export function VerificationProgress({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                 >
-                  <Badge className="bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/30 px-6 py-1 pulse-verification font-mono tracking-widest text-[10px]">
+                  <Badge className="bg-[#22C55E]/10 text-[#22C55E] border-[#22C55E]/30 px-6 py-1 font-mono tracking-widest text-[10px]">
                     KYC_VERIFIED
                   </Badge>
                 </motion.div>
@@ -312,7 +279,7 @@ export function VerificationProgress({
                 transition={{ type: "spring", damping: 10, stiffness: 200 }}
                 className="py-10 flex flex-col items-center text-center space-y-6"
               >
-                <div className="w-20 h-20 rounded-full bg-destructive/10 border border-destructive/20 flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.15)]">
+                <div className="w-20 h-20 rounded-full bg-destructive/5 border border-destructive/20 flex items-center justify-center pointer-events-none">
                   <AlertCircle className="w-10 h-10 text-destructive" />
                 </div>
                 <div className="space-y-2">
@@ -326,7 +293,7 @@ export function VerificationProgress({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="cursor-pointer border-border hover:bg-white/5 text-xs h-8 px-8 transition-vault"
+                  className="cursor-pointer border-border hover:bg-transparent text-xs h-8 px-8"
                   onClick={() => {
                     setInternalStatus("idle");
                     setResetKey((k) => k + 1);
@@ -346,7 +313,7 @@ export function VerificationProgress({
         <Button
           variant="ghost"
           size="sm"
-          className="cursor-pointer text-[10px] text-muted-foreground/70 uppercase tracking-widest hover:text-primary transition-colors"
+          className="cursor-pointer text-[10px] text-muted-foreground/50 uppercase tracking-widest hover:bg-transparent hover:text-foreground transition-colors"
           onClick={() => {
             setInternalStatus("idle");
             setResetKey((k) => k + 1);
@@ -357,7 +324,7 @@ export function VerificationProgress({
         <Button
           variant="ghost"
           size="sm"
-          className="cursor-pointer text-[10px] text-muted-foreground/70 uppercase tracking-widest hover:text-primary transition-colors"
+          className="cursor-pointer text-[10px] text-muted-foreground/50 uppercase tracking-widest hover:bg-transparent hover:text-foreground transition-colors"
           onClick={() => setInternalStatus("failed")}
         >
           Force Error
