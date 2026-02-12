@@ -82,7 +82,7 @@ export function DashboardLayout({ children}: DashboardLayoutProps) {
         {/* Main Content Area */}
         <main className="flex-1 p-4 md:p-6 min-w-0">
           <AnimatePresence mode="wait" initial={true}>
-            <MotionWrapper  key={animationKey} stagger={true} className="w-full max-w-7xl mx-auto">
+            <MotionWrapper  key={animationKey} stagger={true} className="w-full max-w-7xl mx-auto min-h-full pb-10">
               {children}
             </MotionWrapper>
           </AnimatePresence>

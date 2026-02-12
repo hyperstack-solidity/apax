@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { useAPAXStore, formatWeight } from '@/lib/store'
+import { LiveSecurityTerminal } from '@/components/shared/live-security-terminal'
 
 export function PorView() {
   const { vaultData, auditLogs } = useAPAXStore()
@@ -196,7 +197,7 @@ export function PorView() {
           </CardHeader>
           <CardContent className="space-y-4">
             {/* Total Tokens */}
-            <div className="p-6 rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/10 to-transparent">
+            <div className="p-6 rounded-lg border border-[#D4AF37]/20 bg-linear-to-r from-[#D4AF37]/10 to-transparent">
               <div className="text-center">
                 <p className="text-sm text-[#888888] mb-2">Total APX Tokens Minted</p>
                 <p className="text-4xl font-bold text-[#D4AF37]">
@@ -282,45 +283,12 @@ export function PorView() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[300px] pr-4">
-            <div className="space-y-3">
-              {auditLogs.map((log, index) => (
-                <div
-                  key={log.id}
-                  className="flex items-start gap-4 p-4 rounded-lg border border-[#2A2A2A] bg-[#0A0A0A] hover:border-[#D4AF37]/20 transition-colors"
-                >
-                  <div className="relative">
-                    <div className="h-3 w-3 rounded-full bg-[#D4AF37]" />
-                    {index < auditLogs.length - 1 && (
-                      <div className="absolute top-4 left-1/2 w-px h-10 -translate-x-1/2 bg-[#2A2A2A]" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0 font-vault">
-                    <div className="flex items-center justify-between mb-1">
-                      <h4 className="text-sm text-[#E8E8E8] tracking-wide">
-                        [{log.event.toUpperCase()}]
-                      </h4>
-                      <span className="text-xs text-[#666666]">
-                        {formatTimeAgo(log.timestamp)}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#888888] mb-2 tracking-tight">
-                      {log.details}
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] text-[#444444]">TX::HASH</span>
-                      <code className="text-xs text-[#D4AF37] bg-[#1A1A1A] px-1.5 py-0.5 rounded-sm border border-[#2A2A2A]">
-                        {log.txHash}
-                      </code>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <CardContent className='p-0 pl-4'>
+          <ScrollArea className="h-87.5 pr-4 w-full">
+            {/* LST */}
+          <LiveSecurityTerminal logs={auditLogs} />
+          
           </ScrollArea>
-          {/* Scanning Line Effect */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent animate-scan pointer-events-none" />
         </CardContent>
       </Card>
     </div>

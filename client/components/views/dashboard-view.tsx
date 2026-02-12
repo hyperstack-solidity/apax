@@ -1,5 +1,10 @@
-'use client'
+"use client";
 
+import Image from "next/image";
+import { PortfolioOverview } from "@/components/portfolio-overview";
+import { AssetAllocationChart } from "@/components/asset-allocation-chart";
+import { ShariaCertificationHub } from "@/components/sharia-certification-hub";
+import { MetalPriceHistoryChart } from "@/components/charts/metal-price-history";
 import Image from 'next/image'
 import { PortfolioOverview } from '@/components/portfolio-overview'
 import { AssetAllocationChart } from '@/components/asset-allocation-chart'
@@ -23,10 +28,14 @@ export function DashboardView() {
             <div key={i} className="flex gap-12 items-center">
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-terminal-sm">Network Connectivity: 100%</span>
+                <span className="text-terminal-sm">
+                  Network Connectivity: 100%
+                </span>
               </div>
               <span className="text-terminal-sm">Latest Block: #8,421,093</span>
-              <span className="text-terminal-sm text-[#D4AF37]">Vault A1-X: Re-verified by Lead Auditor</span>
+              <span className="text-terminal-sm text-[#D4AF37]">
+                Vault A1-X: Re-verified by Lead Auditor
+              </span>
               <span className="text-terminal-sm">Last Synced: 2s ago</span>
             </div>
           ))}
@@ -52,6 +61,9 @@ export function DashboardView() {
         </div>
       </div>
 
+      {/* Metal price history chart */}
+      <MetalPriceHistoryChart />
+      
       {/* Portfolio Overview Stats */}
       <PortfolioOverview />
 
@@ -88,5 +100,5 @@ export function DashboardView() {
       
 
     </div>
-  )
+  );
 }

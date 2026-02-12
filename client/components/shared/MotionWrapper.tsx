@@ -6,19 +6,21 @@ import { motion, HTMLMotionProps, Variants } from 'framer-motion';
 interface MotionWrapperProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode;
   delay?: number;
-  stagger?: boolean; // prop for orchestration
+  stagger?: boolean;
 }
 
 const variants: Variants = {
-  initial: { opacity: 0, y: 20 },
+  initial: { 
+    opacity: 0, 
+    y: 20 
+  },
   animate: (delay: number) => ({
     opacity: 1,
     y: 0,
     transition: {
       delay,
-      duration: 0.4,
-      ease: [0.25, 0.1, 0.25, 1],
-      // if this is a container, stagger the children
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1],
       staggerChildren: 0.05, 
       delayChildren: delay,
     }
@@ -26,17 +28,19 @@ const variants: Variants = {
   exit: { 
     opacity: 0, 
     y: -20, 
-    transition: { duration: 0.2 } 
+    transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } 
   }
 };
 
-// item variant for children so they can inherit the stagger
 export const childVariants: Variants = {
   initial: { opacity: 0, y: 20 },
   animate: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
+    transition: { 
+      duration: 0.4, 
+      ease: [0.16, 1, 0.3, 1] 
+    }
   }
 };
 
@@ -55,12 +59,24 @@ export const MotionWrapper = ({
       exit="exit"
       custom={delay}
       className={className}
+      style={{ 
+        contain: 'paint', 
+        willChange: 'transform, opacity' 
+      }}
       {...props}
     >
       {stagger 
-        ? React.Children.map(children, (child) => (
-            <motion.div variants={childVariants}>{child}</motion.div>
-          ))
+        ? React.Children.map(children, (child) => {
+            if (!React.isValidElement(child)) return child;
+            return (
+              <motion.div 
+                variants={childVariants}
+                style={{ willChange: 'transform, opacity' }}
+              >
+                {child}
+              </motion.div>
+            );
+          })
         : children}
     </motion.div>
   );

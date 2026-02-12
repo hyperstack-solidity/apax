@@ -116,7 +116,6 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-
     /* Global scrollbar for Firefox */
     scrollbar-width: thin;
     scrollbar-color: rgba(212, 175, 55, 0.6) #0A0A0A;
@@ -132,6 +131,8 @@
 
     /* 2% Noise texture - De-digitalizing */
     position: relative;
+
+    
   }
 
   body::before {
